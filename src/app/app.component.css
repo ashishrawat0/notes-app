@@ -9,10 +9,14 @@
 .notes__info{
     border: blue solid 1px;
     flex: 0.3;
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
 }
 .notes__body{
     border:red solid 1px;
-    align-items: center;
+    display: flex;
+    justify-content: center   ;
     flex:0.7;
 }
 

@@ -16,6 +16,7 @@ export class AppComponent {
   notesForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl(''),
+    id: new FormControl()
   });
 
   notesData = []
@@ -36,25 +37,46 @@ export class AppComponent {
     });
   }
 
-    addNote() {
-      let title: String = this.notesForm.value.title
-      let content: String = this.notesForm.value.content
-      let note = {}
-      if (title) {
-        let id = uuidv4();
-        note['id'] = id
-        note["title"] = title;
-        note["content"] = content;
-        this.notesData.push(note)
-        console.log(this.notesData)
-      }
-      else {
-        this.openSnackBar(this.message,"Close")
-      }
-    }
+  addNote() {
 
-    viewNote(note){
-      console.log(note)
+    let title: String = this.notesForm.value.title
+    let content: String = this.notesForm.value.content
+    let _id=this.notesForm.value.id
+    console.log(this.notesForm.value.id)
+    let note = {}
+    if(_id){
+      for(let i = 0; i<this.notesData.length; i++){
+        if(this.notesData[i].id==_id){
+          console.log(i)
+          this.notesData.splice(i)
+        }
+      }
+      note["id"] =_id
+      note["title"] = title;
+      note["content"] = content;
+      this.notesData.push(note)
+      console.log(this.notesData)
+      this.notesForm.reset()
     }
-
+    if (title && _id==null) {
+      let id = uuidv4();
+      note['id'] = id
+      note["title"] = title;
+      note["content"] = content;
+      this.notesData.push(note)
+      console.log(this.notesData)
+      this.notesForm.reset()
+    }
+    if(title=="") {
+      this.openSnackBar(this.message, "Close")
+    }
   }
+
+  viewNote(note) {
+  let id = note.id
+  this.notesForm.controls.title.setValue(note.title)
+  this.notesForm.controls.content.setValue(note.content)
+  this.notesForm.controls.id.setValue(note.id)
+  }
+
+}
