@@ -1,18 +1,23 @@
 <div class="top__bar">
-  <h4>Top Bar</h4>
-  <button mat-raised-button (click)="addNote()">Add Note</button>
+  <h1>Note Keeper</h1>
 </div>
 <div class="main__content">
   <div class="notes__info">
-    <div> 
+    <div>
       <ul>
-      <li *ngFor="let note of notesData">
-      <mat-card class="card" (click)="viewNote(note)">
-        <mat-card-title>{{note.title}} </mat-card-title>
-        <mat-card-content>{{note.content}} </mat-card-content> 
-      </mat-card>
-    </li>
-    </ul>
+        <div>
+          <li class="notes__list" *ngFor="let note of notesData">
+            <div class="card w-100 border-primary mb-3 " >
+              <div class="card-body" style="width: 18rem;">
+                <h5 class="card-title">{{note.title}}</h5>
+                <p class="card-text">{{note.content}}</p>
+                <button type="button" (click)="viewNote(note)" class="btn btn-outline-info mr-2">Edit</button>
+                <button type="button" (click)="deleteNote(note)" class="btn btn-outline-danger">Delete</button>
+              </div>
+            </div>
+          </li>
+        </div>
+      </ul>
     </div>
   </div>
   <div class="notes__body">
@@ -21,11 +26,14 @@
         <mat-label>Title</mat-label>
         <input matInput placeholder="Title" (input)="noteInfo($event)" formControlName="title" value="Sushi">
       </mat-form-field>
-    
+
       <mat-form-field class="example-full-width">
         <mat-label>Details</mat-label>
         <textarea matInput placeholder="Add details" formControlName="content"></textarea>
       </mat-form-field>
+      <button type="button" (click)="addNote()" class="btn btn-outline-primary mr-3">Save</button>
+      <button type="button" (click)="reset()" class="btn btn-outline-dark">Cancel</button>
+
     </form>
   </div>
 </div>
