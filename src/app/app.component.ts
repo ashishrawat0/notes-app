@@ -11,7 +11,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AppComponent {
   constructor(private _snackBar: MatSnackBar) {
     let localNotes = localStorage.getItem('notesData')
-    this.notesData= JSON.parse(localNotes)
+    console.log(localNotes)
+    if(localNotes){
+      this.notesData= JSON.parse(localNotes)
+    }
+    else{
+      this.notesData = []
+    }
+    
    }
   message = "Please add title"
   text = "";
@@ -41,16 +48,18 @@ export class AppComponent {
   }
 
   addNote() {
-
+  
     let title: String = this.notesForm.value.title
     let content: String = this.notesForm.value.content
     let _id=this.notesForm.value.id
-    console.log(this.notesForm.value.id)
+    console.log(title)
     let note = {}
-    if(_id){
+    if(title==null ||  title=="") {
+      this.openSnackBar(this.message, "Close")
+    }
+    if(_id && title!=''){
       for(let i = 0; i<this.notesData.length; i++){
         if(this.notesData[i].id==_id){
-          console.log(i)
           this.notesData.splice(i)
         }
       }
@@ -59,7 +68,6 @@ export class AppComponent {
       note["content"] = content;
       this.notesData.push(note)
       localStorage.setItem('notesData',JSON.stringify(this.notesData))
-      console.log(this.notesData)
       this.notesForm.reset()
     }
     if (title && _id==null) {
@@ -70,9 +78,6 @@ export class AppComponent {
       this.notesData.push(note)
       localStorage.setItem('notesData',JSON.stringify(this.notesData))
       this.notesForm.reset()
-    }
-    if(title=="") {
-      this.openSnackBar(this.message, "Close")
     }
   }
   deleteNote(note){
