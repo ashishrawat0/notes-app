@@ -71,7 +71,14 @@ export class AppComponent {
       this.openSnackBar(this.message, "Close")
     }
   }
-
+  deleteNote(note){
+    let _id = note.id
+    for(let i =0; i<this.notesData.length;i++){
+      if(this.notesData[i].id==_id){
+        this.notesData.splice(i)
+      }
+    }
+  }
   viewNote(note) {
   let id = note.id
   this.notesForm.controls.title.setValue(note.title)
