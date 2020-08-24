@@ -82,6 +82,7 @@ export class AppComponent {
         this.notesData.splice(i)
       }
     }
+    localStorage.setItem('notesData',JSON.stringify(this.notesData))
   }
   viewNote(note) {
   let id = note.id
