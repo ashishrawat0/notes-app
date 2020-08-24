@@ -9,7 +9,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar) {
+    let localNotes = localStorage.getItem('notesData')
+    this.notesData= JSON.parse(localNotes)
+   }
   message = "Please add title"
   text = "";
   notes = 'New note';
@@ -55,6 +58,7 @@ export class AppComponent {
       note["title"] = title;
       note["content"] = content;
       this.notesData.push(note)
+      localStorage.setItem('notesData',JSON.stringify(this.notesData))
       console.log(this.notesData)
       this.notesForm.reset()
     }
@@ -64,7 +68,7 @@ export class AppComponent {
       note["title"] = title;
       note["content"] = content;
       this.notesData.push(note)
-      console.log(this.notesData)
+      localStorage.setItem('notesData',JSON.stringify(this.notesData))
       this.notesForm.reset()
     }
     if(title=="") {
@@ -84,6 +88,11 @@ export class AppComponent {
   this.notesForm.controls.title.setValue(note.title)
   this.notesForm.controls.content.setValue(note.content)
   this.notesForm.controls.id.setValue(note.id)
+  }
+
+  reset(){
+    this.notesForm.reset()
+
   }
 
 }
