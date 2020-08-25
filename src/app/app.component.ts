@@ -101,7 +101,6 @@ export class AppComponent implements OnDestroy, OnInit {
       this.notesData.push(note)
       localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
-      console.log(note)
     }
   }
 
@@ -143,6 +142,9 @@ export class AppComponent implements OnDestroy, OnInit {
 
   /// Search logic created
   filter(query: string) {
+    if(query!=" "){
+      this.filteredNotes=this.notesData
+    }
     let allResult = []
     query = query.toLowerCase().trim()
     //split up search query into indiviual words
