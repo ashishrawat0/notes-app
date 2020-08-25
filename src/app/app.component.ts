@@ -89,6 +89,7 @@ export class AppComponent implements OnDestroy, OnInit {
       note["content"] = content;
       note["time"] = time
       this.notesData.push(note)
+      this.filteredNotes = this.notesData
       localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
     }
@@ -99,6 +100,7 @@ export class AppComponent implements OnDestroy, OnInit {
       note["content"] = content;
       note["time"] = time
       this.notesData.push(note)
+      this.filteredNotes = this.notesData
       localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
     }
