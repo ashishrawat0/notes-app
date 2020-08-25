@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ElementRef } from '@angular/core';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+
+export class AppComponent implements OnDestroy, OnInit {
   constructor(private _snackBar: MatSnackBar, private elementRef: ElementRef) {
     let screenSize = window.innerWidth
     let localNotes = localStorage.getItem('notesData')
@@ -27,6 +28,16 @@ export class AppComponent {
       this.showStyle = "none"
     }
     this.filteredNotes = this.notesData
+  }
+  time = new Date();
+
+  ngOnInit() {
+      setInterval(() => {
+         this.time = new Date();
+      }, 1000);
+  }
+  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
   }
   message = "Please add title"
   text = "";
@@ -63,6 +74,7 @@ export class AppComponent {
     let content: String = this.notesForm.value.content
     let _id = this.notesForm.value.id
     let note = {}
+    let time = new Date();
     if (title == null || title == "") {
       this.openSnackBar(this.message, "Close")
     }
@@ -75,6 +87,7 @@ export class AppComponent {
       note["id"] = _id
       note["title"] = title;
       note["content"] = content;
+      note["time"] = time
       this.notesData.push(note)
       localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
@@ -84,9 +97,11 @@ export class AppComponent {
       note['id'] = id
       note["title"] = title;
       note["content"] = content;
+      note["time"] = time
       this.notesData.push(note)
       localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
+      console.log(note)
     }
   }
 

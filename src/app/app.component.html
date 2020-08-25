@@ -15,6 +15,9 @@
               <div class="card-body" style="width: 18rem; max-width: 200px;">
                 <h5 class="card-title">{{note.title}}</h5>
                 <p class="card-text">{{note.content}}</p>
+                <ul class="list-group list-group-flush mb-2">
+                  <li class="list-group-item">{{note.time | date:'medium' }}</li>
+                </ul>
                 <button type="button" (click)="viewNote(note)" class="btn btn-outline-info mr-2">Edit</button>
                 <button type="button" (click)="deleteNote(note)" class="btn btn-outline-danger">Delete</button>
               </div>
@@ -37,8 +40,10 @@
       </mat-form-field>
       <button type="button" (click)="addNote()" class="btn btn-outline-primary mr-3">Save</button>
       <button type="button" (click)="reset()" class="btn btn-outline-dark">Cancel</button>
-
     </form>
+    <div>
+      {{ time | date: 'hh:mm:ss a' }}
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>
