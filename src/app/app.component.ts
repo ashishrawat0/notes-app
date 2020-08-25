@@ -50,14 +50,15 @@ export class AppComponent {
     }
   }
 
+  /// pop up if the title is not added
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
   }
 
+  /// funtionality to add the notes
   addNote() {
-
     let title: String = this.notesForm.value.title
     let content: String = this.notesForm.value.content
     let _id = this.notesForm.value.id
@@ -88,6 +89,8 @@ export class AppComponent {
       this.notesForm.reset()
     }
   }
+
+  ///functionality to delete the note
   deleteNote(note) {
     let _id = note.id
     for (let i = 0; i < this.notesData.length; i++) {
@@ -97,6 +100,9 @@ export class AppComponent {
     }
     localStorage.setItem('notesData', JSON.stringify(this.notesData))
   }
+
+
+  ///Get the node details for updating it
   viewNote(note) {
     let id = note.id
     this.notesForm.controls.title.setValue(note.title)
@@ -104,10 +110,13 @@ export class AppComponent {
     this.notesForm.controls.id.setValue(note.id)
   }
 
+  /// funtionality to cancel the form
   reset() {
     this.notesForm.reset()
 
   }
+
+  ///Toggle the notes functionality
   showNotes() {
     if (this.showStyle == "none") {
       this.showStyle = "block"
@@ -117,6 +126,7 @@ export class AppComponent {
     }
   }
 
+  /// Search logic created
   filter(query: string) {
     let allResult = []
     query = query.toLowerCase().trim()
