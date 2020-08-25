@@ -112,6 +112,7 @@ export class AppComponent implements OnDestroy, OnInit {
         this.notesData.splice(i)
       }
     }
+    this.filteredNotes = this.notesData
     localStorage.setItem('notesData', JSON.stringify(this.notesData))
   }
 
@@ -142,7 +143,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   /// Search logic created
   filter(query: string) {
-    if(query!=" "){
+    if(query!=""){
       this.filteredNotes=this.notesData
     }
     let allResult = []
