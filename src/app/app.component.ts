@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -9,17 +11,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(private _snackBar: MatSnackBar, private elementRef: ElementRef) {
+    let screenSize = window.innerWidth
     let localNotes = localStorage.getItem('notesData')
-    console.log(localNotes)
-    if(localNotes){
-      this.notesData= JSON.parse(localNotes)
+    if (localNotes) {
+      this.notesData = JSON.parse(localNotes)
     }
-    else{
+    else {
       this.notesData = []
     }
-    
-   }
+    if (screenSize > 800){
+      this.showStyle = "block"
+    }
+    else{
+      this.showStyle = "none"
+    }
+  }
   message = "Please add title"
   text = "";
   notes = 'New note';
@@ -28,7 +35,7 @@ export class AppComponent {
     content: new FormControl(''),
     id: new FormControl()
   });
-
+  showStyle = ''
   notesData = []
 
   noteInfo(note) {
@@ -48,57 +55,66 @@ export class AppComponent {
   }
 
   addNote() {
-  
+
     let title: String = this.notesForm.value.title
     let content: String = this.notesForm.value.content
-    let _id=this.notesForm.value.id
+    let _id = this.notesForm.value.id
     console.log(title)
     let note = {}
-    if(title==null ||  title=="") {
+    if (title == null || title == "") {
       this.openSnackBar(this.message, "Close")
     }
-    if(_id && title!=''){
-      for(let i = 0; i<this.notesData.length; i++){
-        if(this.notesData[i].id==_id){
+    if (_id && title != '') {
+      for (let i = 0; i < this.notesData.length; i++) {
+        if (this.notesData[i].id == _id) {
           this.notesData.splice(i)
         }
       }
-      note["id"] =_id
+      note["id"] = _id
       note["title"] = title;
       note["content"] = content;
       this.notesData.push(note)
-      localStorage.setItem('notesData',JSON.stringify(this.notesData))
+      localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
     }
-    if (title && _id==null) {
+    if (title && _id == null) {
       let id = uuidv4();
       note['id'] = id
       note["title"] = title;
       note["content"] = content;
       this.notesData.push(note)
-      localStorage.setItem('notesData',JSON.stringify(this.notesData))
+      localStorage.setItem('notesData', JSON.stringify(this.notesData))
       this.notesForm.reset()
     }
   }
-  deleteNote(note){
+  deleteNote(note) {
     let _id = note.id
-    for(let i =0; i<this.notesData.length;i++){
-      if(this.notesData[i].id==_id){
+    for (let i = 0; i < this.notesData.length; i++) {
+      if (this.notesData[i].id == _id) {
         this.notesData.splice(i)
       }
     }
-    localStorage.setItem('notesData',JSON.stringify(this.notesData))
+    localStorage.setItem('notesData', JSON.stringify(this.notesData))
   }
   viewNote(note) {
-  let id = note.id
-  this.notesForm.controls.title.setValue(note.title)
-  this.notesForm.controls.content.setValue(note.content)
-  this.notesForm.controls.id.setValue(note.id)
+    let id = note.id
+    this.notesForm.controls.title.setValue(note.title)
+    this.notesForm.controls.content.setValue(note.content)
+    this.notesForm.controls.id.setValue(note.id)
   }
 
-  reset(){
+  reset() {
     this.notesForm.reset()
 
   }
-
+  showNotes() {
+    console.log(this.showStyle)
+    if(this.showStyle == "none"){
+      console.log("000")
+      this.showStyle = "block"
+    }
+    else{
+      this.showStyle = "none"
+    }
+  }
 }

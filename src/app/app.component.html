@@ -4,11 +4,14 @@
 <div class="main__content">
   <div class="notes__info">
     <div>
+      <span id="nav__button"  class="material-icons" (click)="showNotes()">
+        dehaze
+        </span>
       <ul>
-        <div>
+        <div [style.display]="showStyle" class="notes__data">
           <li class="notes__list" *ngFor="let note of notesData">
-            <div class="card w-100 border-primary mb-3 " >
-              <div class="card-body" style="width: 18rem;">
+            <div class="card w-100 border-primary mb-3" >
+              <div class="card-body" style="width: 18rem; max-width: 200px;">
                 <h5 class="card-title">{{note.title}}</h5>
                 <p class="card-text">{{note.content}}</p>
                 <button type="button" (click)="viewNote(note)" class="btn btn-outline-info mr-2">Edit</button>

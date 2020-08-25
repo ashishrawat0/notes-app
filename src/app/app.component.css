@@ -2,7 +2,7 @@ h1.sansserif {
     font-family: Arial, Helvetica, sans-serif;
   }
 .top__bar{
-    border: solid black 1px;
+    /* border: solid black 1px; */
     width: 100%;
     margin-bottom: 10px;
     display: flex;
@@ -11,16 +11,17 @@ h1.sansserif {
 }
 
 .notes__info{
-    border: blue solid 1px;
-    flex: 0.3;
+    /* border: blue solid 1px; */
+    flex: 0.2;
     display: flex;
     justify-content: center;
 }
 .notes__body{
-    border:red solid 1px;
+    /* border:red solid 1px; */
+    margin-left: 20px;
     display: flex;
     justify-content: center   ;
-    flex:0.7;
+    flex:0.8;
 }
 .notes__list{
     display: flex;
@@ -51,4 +52,24 @@ h1.sansserif {
   }
   .card-body:hover{
     box-shadow: 5px 5px 5px #4b4b4d;
+  }
+
+  #nav__button{
+      display: none;
+  }
+  @media screen and (max-width: 800px) {
+    #nav__button{
+        display: block;
+    }
+    #nav__button:hover{
+        cursor: pointer;
+    }
+    .notes__data {
+        display: none;   
+    } 
+     @media screen and (min-width:800px) {
+        .notes__data{
+            display: block;
+        }
+    }
   }
