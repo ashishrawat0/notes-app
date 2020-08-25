@@ -20,12 +20,13 @@ export class AppComponent {
     else {
       this.notesData = []
     }
-    if (screenSize > 800){
+    if (screenSize > 800) {
       this.showStyle = "block"
     }
-    else{
+    else {
       this.showStyle = "none"
     }
+    this.filteredNotes = this.notesData
   }
   message = "Please add title"
   text = "";
@@ -37,6 +38,7 @@ export class AppComponent {
   });
   showStyle = ''
   notesData = []
+  filteredNotes = []
 
   noteInfo(note) {
     let details = note.target.value
@@ -59,7 +61,6 @@ export class AppComponent {
     let title: String = this.notesForm.value.title
     let content: String = this.notesForm.value.content
     let _id = this.notesForm.value.id
-    console.log(title)
     let note = {}
     if (title == null || title == "") {
       this.openSnackBar(this.message, "Close")
@@ -108,13 +109,51 @@ export class AppComponent {
 
   }
   showNotes() {
-    console.log(this.showStyle)
-    if(this.showStyle == "none"){
-      console.log("000")
+    if (this.showStyle == "none") {
       this.showStyle = "block"
     }
-    else{
+    else {
       this.showStyle = "none"
     }
+  }
+
+  filter(query: string) {
+    let allResult = []
+    query = query.toLowerCase().trim()
+    //split up search query into indiviual words
+    let terms: string[] = query.split(" ");
+    //splitting on the basis of spaces
+    terms = this.removeDuplicactes(terms)
+    //compile all results in all result array
+    terms.forEach(term => {
+      let results = this.relevantNotes(term)
+      /////append to all results array
+      allResult = [...allResult, ...results]
+    })
+
+    let uniqueResults = this.removeDuplicactes(allResult)
+    this.filteredNotes = uniqueResults
+  }
+
+  removeDuplicactes(arr: Array<any>): Array<any> {
+    let uniqueResults: Set<any> = new Set<any>();
+    arr.forEach(e => uniqueResults.add(e))
+    return Array.from(uniqueResults)
+  }
+
+  relevantNotes(query: any) {
+    query = query.toLowerCase().trim();
+    let relevantNotes = this.notesData.filter(note => {
+      if (note.title && note.title.toLowerCase().includes(query)) {
+        return true
+      }
+      if (note.content && note.content.toLowerCase().includes(query)) {
+        return true
+      }
+      else {
+        return false
+      }
+    })
+    return relevantNotes;
   }
 }

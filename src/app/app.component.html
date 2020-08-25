@@ -4,13 +4,14 @@
 <div class="main__content">
   <div class="notes__info">
     <div>
-      <span id="nav__button"  class="material-icons" (click)="showNotes()">
+      <span id="nav__button" class="material-icons" (click)="showNotes()">
         dehaze
-        </span>
+      </span>
       <ul>
         <div [style.display]="showStyle" class="notes__data">
-          <li class="notes__list" *ngFor="let note of notesData">
-            <div class="card w-100 border-primary mb-3" >
+          <input class="form-control mb-2" type="text" placeholder="Filter" (keyup)="filter($event.target.value)" aria-label="Search">
+          <li class="notes__list" *ngFor="let note of filteredNotes">
+            <div class="card w-100 border-primary mb-3">
               <div class="card-body" style="width: 18rem; max-width: 200px;">
                 <h5 class="card-title">{{note.title}}</h5>
                 <p class="card-text">{{note.content}}</p>
